@@ -39,16 +39,17 @@ class THMBot extends ActivityHandler {
 
 // Adapter & Bot
 const adapter = new BotFrameworkAdapter({
-    appId: '',
-    appPassword: ''
+    appId: process.env.MicrosoftAppId,
+    appPassword: process.env.MicrosoftAppPassword
 });
 
 const bot = new THMBot();
 
 // Server starten
 const server = restify.createServer();
-server.listen(3978, () => {
-    console.log('Bot läuft unter http://localhost:3978');
+server.use(restify.plugins.bodyParser()); // Body-Parser hinzufügen
+server.listen(process.env.PORT || 3978, () => {
+    console.log(`Server läuft auf ${server.url}`);
 });
 
 // Routing
